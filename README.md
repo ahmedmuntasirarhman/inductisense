@@ -71,10 +71,6 @@ The simulation, signal-feature code, classifier demo, tests, and firmware decisi
 
 For a physical build, use low-voltage test signals first and get qualified supervision before working near motor wiring. The [wiring notes](hardware/wiring.md) describe the concept and are not a substitute for a reviewed hardware design.
 
-## Contact
-
-Questions or suggestions? [Open an issue](https://github.com/ahmedmuntasirarhman/inductisense/issues).
-
 ## License
 
 MIT — see [LICENSE](LICENSE).
