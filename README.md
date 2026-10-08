@@ -1,6 +1,6 @@
 # InductiSense
 
-> **An edge-AI condition-monitoring platform for small induction motors**
+
 > Author: **Ahmed Abdelrahman**
 
 [![CI](https://github.com/ahmedmuntasirarhman/inductisense/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedmuntasirarhman/inductisense/actions/workflows/ci.yml)
