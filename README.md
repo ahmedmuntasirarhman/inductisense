@@ -1,13 +1,13 @@
 # InductiSense
 
 > **An edge-AI condition-monitoring platform for small induction motors**
-> Designed and authored by **Ahmed Abdelrahman**
+> Author: **Ahmed Abdelrahman**
 
 [![CI](https://github.com/ahmedmuntasirarhman/inductisense/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedmuntasirarhman/inductisense/actions/workflows/ci.yml)
 ![Domain](https://img.shields.io/badge/domain-electrical%20engineering-0f766e)
 ![License](https://img.shields.io/badge/license-MIT-2563eb)
 
-**InductiSense** is a safe, low-cost proof-of-concept for identifying early motor faults from **motor-current signature analysis (MCSA)** and vibration sensing. It brings together embedded systems, analogue measurement, digital signal processing, and explainable machine learning in one university-application-ready engineering project.
+**InductiSense** is a safe, low-cost proof-of-concept for identifying early motor faults from **motor-current signature analysis (MCSA)** and vibration sensing. It brings together embedded systems, analogue measurement, digital signal processing, and explainable machine learning in one independent engineering project.
 
 The project deliberately keeps the sensing chain isolated from mains voltage: a clip-on current transformer and an isolated wall-powered controller form the recommended prototype. The signal-analysis core can be validated entirely with the included reproducible simulation before connecting to any machine.
 
@@ -58,7 +58,7 @@ firmware/                 Portable C++ DSP / decision core + PlatformIO skeleton
 hardware/                 Safe prototype wiring, block diagram, BOM
 scripts/                  Build and analysis helpers
 tests/                    Python regression tests
-docs/                     Engineering notebook, validation plan, application brief
+docs/                     Engineering notebook and validation evidence
 .github/workflows/        Continuous integration
 ```
 
