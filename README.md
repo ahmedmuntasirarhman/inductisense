@@ -1,68 +1,48 @@
 # InductiSense
 
-
-> Author: **Ahmed Abdelrahman**
+**A motor-monitoring project by Ahmed Abdelrahman**
 
 [![CI](https://github.com/ahmedmuntasirarhman/inductisense/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedmuntasirarhman/inductisense/actions/workflows/ci.yml)
-![Domain](https://img.shields.io/badge/domain-electrical%20engineering-0f766e)
-![License](https://img.shields.io/badge/license-MIT-2563eb)
 
-**InductiSense** is a safe, low-cost proof-of-concept for identifying early motor faults from **motor-current signature analysis (MCSA)** and vibration sensing. It brings together embedded systems, analogue measurement, digital signal processing, and explainable machine learning in one independent engineering project.
+I built InductiSense to explore how electrical and vibration signals could help spot changes in an induction motor. The project combines motor-current analysis, signal processing, and embedded C++ code in a small, reproducible demonstration.
 
-The project deliberately keeps the sensing chain isolated from mains voltage: a clip-on current transformer and an isolated wall-powered controller form the recommended prototype. The signal-analysis core can be validated entirely with the included reproducible simulation before connecting to any machine.
+![Feature map from simulated motor signals](docs/assets/condition-map.png)
 
-![Synthetic operating-state map](docs/assets/condition-map.png)
+## How it works
 
-## Why it is Useful
+The idea is to measure motor current with a clip-on current transformer and vibration with a small motion sensor. Software then looks for patterns—such as sidebands in the current signal or changes in vibration—and reports a possible condition to investigate.
 
-Many small induction motors operate until failure because industrial condition-monitoring equipment is expensive. InductiSense explores a practical alternative:
-
-- **Current signature analysis:** detects fault-related sidebands around the electrical fundamental.
-- **Vibration analysis:** separates mechanical signatures such as misalignment and bearing roughness.
-- **Edge inference:** converts transparent frequency-domain features into a local health decision.
-- **Reproducible engineering:** includes a deterministic synthetic-data benchmark, unit tests, a hardware bill of materials, and a validation plan.
-
-> This is a **diagnostic prototype**, not a safety-rated protection device. Do not use it to make safety-critical shutdown decisions.
-
-## System architecture
+The diagram shows the **intended system design**; it is not a photograph or a claim that the hardware has been built.
 
 ```mermaid
-graph LR
-  M[Induction motor] -->|magnetic field| CT[Split-core current transformer]
-  M -->|mechanical vibration| IMU[3-axis IMU]
-  CT --> AFE[Burden resistor + anti-alias filter]
-  AFE --> ADC[24-bit simultaneous-sampling ADC]
-  IMU --> MCU[ESP32-S3 edge controller]
+flowchart LR
+  M[Induction motor] --> CT[Clip-on current sensor]
+  M --> IMU[Vibration sensor]
+  CT --> ADC[Signal conditioning and ADC]
+  IMU --> MCU[Microcontroller]
   ADC --> MCU
-  MCU --> DSP[RMS · FFT/Goertzel · sidebands]
-  DSP --> CLF[Explainable health classifier]
-  CLF --> UI[Serial / local dashboard]
+  MCU --> DSP[Signal features]
+  DSP --> C[Condition estimate]
+  C --> OUT[Serial output]
 ```
 
-## Fault signatures explored
+The software explores patterns associated with:
 
-| Operating state | Electrical / mechanical indicator | Engineering interpretation |
-|---|---|---|
-| Healthy | Low current-sideband energy, low high-frequency vibration | Baseline operating condition |
-| Rotor-bar anomaly | Elevated current components near `f₁ ± 2sf₁` | Possible broken/loose rotor-bar signature |
-| Shaft misalignment | Strong `2×` rotational vibration component | Mechanical alignment issue candidate |
-| Bearing roughness | Elevated high-frequency vibration energy | Bearing-surface degradation candidate |
+- **Rotor-bar issues:** current components around the electrical fundamental frequency.
+- **Misalignment:** vibration near twice the shaft's rotational frequency.
+- **Bearing roughness:** increased high-frequency vibration energy.
 
-`f₁` is line frequency and `s` is estimated slip. The labels above are **screening indicators**, not a substitute for teardown inspection.
+These patterns can have other causes, too. They are clues to investigate—not proof that a motor has a particular fault.
 
-## Repository map
+## What’s in the repository
 
-```text
-analysis/                 Reproducible simulation and feature extractor
-firmware/                 Portable C++ DSP / decision core + PlatformIO skeleton
-hardware/                 Safe prototype wiring, block diagram, BOM
-scripts/                  Build and analysis helpers
-tests/                    Python regression tests
-docs/                     Engineering notebook and validation evidence
-.github/workflows/        Continuous integration
-```
+- `analysis/` — signal generation, feature extraction, and the demo classifier.
+- `firmware/` — portable C++ signal-processing and decision code, plus an ESP32-S3 starting sketch.
+- `hardware/` — a reference parts list and wiring notes.
+- `tests/` — automated checks for the Python analysis.
+- `docs/` — engineering notes and a summary of what has been tested.
 
-## Quick start
+## Try the software demo
 
 ```bash
 git clone https://github.com/ahmedmuntasirarhman/inductisense.git
@@ -74,7 +54,9 @@ python analysis/train_demo.py --out docs/assets/condition-map.png --metrics docs
 python -m unittest discover -s tests -v
 ```
 
-Run the portable embedded-core test without an ESP32:
+The demo creates 120 simulated examples for each of four conditions, extracts nine features, and evaluates a nearest-centroid classifier. Its benchmark results are for **simulated signals only**; they do not show how accurately the system detects faults on real motors.
+
+To run the portable C++ checks without an ESP32:
 
 ```bash
 cd firmware
@@ -83,25 +65,16 @@ g++ -std=c++17 -Wall -Wextra -pedantic -Iinclude \
   -o /tmp/inductisense_firmware_test && /tmp/inductisense_firmware_test
 ```
 
-## Measured by the included demonstration
+## Current status
 
-The simulated benchmark creates 120 seeded examples for each of four operating states, extracts nine engineering features, trains a nearest-centroid model, and reports held-out accuracy. Run the command above to regenerate the figure and exact metrics. The result validates the **pipeline on modeled signals only**—it is not a claim of field accuracy.
+The simulation, signal-feature code, classifier demo, tests, and firmware decision core are in the repository. I haven’t built or measured a physical motor prototype. The ESP32 sketch is an early starting point: it reads the board’s analogue input, and its vibration values are examples rather than readings from a connected sensor.
 
-## Build safely
+For a physical build, use low-voltage test signals first and get qualified supervision before working near motor wiring. The [wiring notes](hardware/wiring.md) describe the concept and are not a substitute for a reviewed hardware design.
 
-- Start with a **split-core CT** clamped around one insulated conductor; never create an exposed mains connection.
-- Power the controller from a certified, isolated USB or 12 V wall adapter.
-- Build and test first with the simulation or a low-voltage function-generator signal.
-- If instrumenting a real motor, work with a qualified supervisor and follow local electrical safety rules.
+## Contact
 
-See [hardware/wiring.md](hardware/wiring.md) and [hardware/BOM.csv](hardware/BOM.csv).
-
-## Project status and evidence
-
-The software demonstration, analysis pipeline, portable C++ feature/decision core, regression tests, documentation, and GitHub Actions workflow are implemented. The benchmark currently evaluates four intentionally separable **synthetic** operating-state classes; its score measures performance on that generated dataset only.
-
-No physical motor prototype has been assembled or measured in this project. The ESP32-S3 entry point is a bring-up skeleton: ADC acquisition uses the MCU's analogue input, and the vibration features are demonstration values rather than readings from a connected IMU. No calibration, real-motor fault diagnosis, or safety certification is claimed. The wiring guide is a design reference, not an instruction to energize an unreviewed circuit.
+Questions or suggestions? [Open an issue](https://github.com/ahmedmuntasirarhman/inductisense/issues).
 
 ## License
 
-MIT © 2026 Ahmed Abdelrahman. See [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).
