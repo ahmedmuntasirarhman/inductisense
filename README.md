@@ -13,7 +13,7 @@ The project deliberately keeps the sensing chain isolated from mains voltage: a 
 
 ![Synthetic operating-state map](docs/assets/condition-map.png)
 
-## Why it is interesting
+## Why it is Useful
 
 Many small induction motors operate until failure because industrial condition-monitoring equipment is expensive. InductiSense explores a practical alternative:
 
