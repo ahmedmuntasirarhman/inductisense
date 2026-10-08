@@ -11,12 +11,12 @@
 ## Technical highlights to discuss
 
 | Topic | What to say | Evidence in repo |
-|---|---|---|
+| --- | --- | --- |
 | Electrical measurement | “I chose a split-core CT to keep the first prototype electrically isolated from mains.” | `hardware/wiring.md`, `hardware/BOM.csv` |
 | DSP | “I used RMS/crest-factor calculations and Goertzel detectors because they are lightweight enough for an MCU.” | `firmware/src/SignalFeatures.cpp`, `docs/engineering-notebook.md` |
-| Motor theory | “I investigated sidebands around \(f_1(1\pm2s)\), while treating them as indicators rather than proof of a rotor fault.” | `analysis/features.py`, engineering notebook |
+| Motor theory | “I investigated sidebands around $$f_1(1\pm2s)$$, while treating them as indicators rather than proof of a rotor fault.” | `analysis/features.py`, engineering notebook |
 | Mechanical systems | “A vibration IMU lets the system distinguish a strong 2× rotational component from high-frequency roughness.” | `analysis/synthetic_data.py` |
-| Scientific honesty | “The current accuracy demonstration is deliberately synthetic; I wrote the next physical validation protocol rather than overstating the result.” | `docs/validation.md` |
+| Scientific honesty | “The current benchmark uses generated signals only; I distinguish that software test from physical measurements.” | `docs/validation.md` |
 | Software quality | “The repository has Python tests, portable C++ tests, and CI so claims can be reproduced.” | `tests/`, `firmware/test/`, `.github/workflows/ci.yml` |
 
 ## Short application / CV description
@@ -33,14 +33,6 @@ For an initial diagnostic tool, transparency and limited data matter. A feature-
 
 The detector needs real data from the specific motor and load. Slip, supply variation, mounting position, and motor construction all affect the signatures. The project therefore calls its outputs screening indicators and proposes calibration/field validation before any strong reliability claim.
 
-### “What would you do with a larger budget?”
+## Demonstrated project scope
 
-Use a simultaneous-sampling ADC with a reviewed isolated analogue front end, a calibrated triaxial accelerometer, a controlled motor test rig, and a reference power analyser. I would publish the raw labelled dataset and compare windowing, frequency tracking, and a quantised TinyML model against the transparent rules.
-
-## Portfolio checklist
-
-- [ ] Add photographs of the safely enclosed prototype and sensor installation.
-- [ ] Add a one-minute video showing a live serial readout from a low-voltage bench signal.
-- [ ] Link one or two clean commits showing the project evolution.
-- [ ] Keep the README result boundary intact; do not claim field accuracy before field tests.
-- [ ] Be ready to draw the current-sensor → ADC → DSP → decision chain by hand.
+The repository contains a reproducible synthetic-data pipeline, signal-feature extraction, a nearest-centroid demonstration, portable C++ DSP and rule-based decision code, regression tests, CI, a hardware reference design, and technical documentation. It does **not** contain a completed or measured physical prototype; the firmware's ADC/IMU integration remains a skeleton. Describe it as a software-validated prototype concept, not as a field-tested motor diagnostic system.

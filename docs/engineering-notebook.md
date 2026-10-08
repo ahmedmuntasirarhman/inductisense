@@ -20,7 +20,7 @@ This is a **screening** problem, not a certified diagnosis problem. A useful fir
 |---|---|---:|---|
 | Motor current | Split-core CT + conditioned ADC | 4.096 kS/s | Electrical fundamental, harmonics, slip sidebands, RMS load context |
 | Vibration | Digital 3-axis IMU | 1.6 kS/s | Rotational `1×/2×` components and high-frequency roughness energy |
-| Context (future) | Temperature + voltage | 1–10 S/s | Helps distinguish load, cooling, and supply changes from a defect |
+| Context (not implemented) | Temperature + voltage | 1–10 S/s | Not measured by this software demonstration |
 
 The CT clamps around **one insulated phase conductor**. Its physical isolation makes it preferable to an exposed voltage-divider prototype for an early student build. See [the wiring guide](../hardware/wiring.md) for the safety boundary.
 
@@ -112,6 +112,4 @@ For each test condition, record:
 
 ## 6. Validation stance
 
-The included Python data generator is **physics-inspired** and deliberately contains separable conditions. Its value is that it exercises the pipeline deterministically: generation → feature extraction → classifier → figure → unit tests. It does **not** establish diagnostic accuracy on a real motor.
-
-The next meaningful experiment is a supervised lab campaign: capture a healthy baseline, introduce one safe and reversible perturbation under supervision (for example, a controlled alignment offset on a bench rig), and compare signatures against an independent vibration/reference instrument. Full proposed acceptance criteria appear in [validation.md](validation.md).
+The included Python data generator is **physics-inspired** and deliberately contains separable conditions. Its value is that it exercises the pipeline deterministically: generation → feature extraction → classifier → figure → unit tests. It does **not** establish diagnostic accuracy on a real motor. No physical data, calibration, or lab measurement is included in this repository; the current evidence is limited to generated signals and software regression tests, as detailed in [validation.md](validation.md).

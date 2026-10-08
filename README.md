@@ -100,13 +100,11 @@ See [hardware/wiring.md](hardware/wiring.md) and [hardware/BOM.csv](hardware/BOM
 
 InductiSense demonstrates an end-to-end engineering process: a defined problem, a safe sensing architecture, equations behind the features, verifiable software, and an honest validation boundary. [The application brief](docs/application-brief.md) gives a concise way to present the work in interviews.
 
-## Future work
+## Project status and evidence
 
-1. Capture labelled data from healthy and deliberately misaligned bench motors.
-2. Calibrate CT gain and phase against a reference power analyser.
-3. Compare the rules engine with a quantised TinyML classifier.
-4. Add temperature and supply-voltage sensing for context-aware fault decisions.
-5. Design a revision-A PCB with proper creepage, shielding, and test points under qualified review.
+The software demonstration, analysis pipeline, portable C++ feature/decision core, regression tests, documentation, and GitHub Actions workflow are implemented. The benchmark currently evaluates four intentionally separable **synthetic** operating-state classes; its score measures performance on that generated dataset only.
+
+No physical motor prototype has been assembled or measured in this project. The ESP32-S3 entry point is a bring-up skeleton: ADC acquisition uses the MCU's analogue input, and the vibration features are demonstration values rather than readings from a connected IMU. No calibration, real-motor fault diagnosis, or safety certification is claimed. The wiring guide is a design reference, not an instruction to energize an unreviewed circuit.
 
 ## License
 
