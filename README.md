@@ -96,10 +96,6 @@ The simulated benchmark creates 120 seeded examples for each of four operating s
 
 See [hardware/wiring.md](hardware/wiring.md) and [hardware/BOM.csv](hardware/BOM.csv).
 
-## What makes this a strong application project
-
-InductiSense demonstrates an end-to-end engineering process: a defined problem, a safe sensing architecture, equations behind the features, verifiable software, and an honest validation boundary. [The application brief](docs/application-brief.md) gives a concise way to present the work in interviews.
-
 ## Project status and evidence
 
 The software demonstration, analysis pipeline, portable C++ feature/decision core, regression tests, documentation, and GitHub Actions workflow are implemented. The benchmark currently evaluates four intentionally separable **synthetic** operating-state classes; its score measures performance on that generated dataset only.
