@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# C/C++ build artefacts
+*.o
+*.elf
+*.bin
+*.map
+firmware/.pio/
+
+# Generated analysis artefacts
+docs/assets/demo_metrics.json
+
+# OS/editor files
+.DS_Store
+.vscode/
+.idea/

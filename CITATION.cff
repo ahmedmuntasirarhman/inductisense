@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use InductiSense, please cite it as below."
+title: "InductiSense: Edge-Based Motor Health Monitor"
+type: software
+authors:
+  - family-names: Abdelrahman
+    given-names: Ahmed
+repository-code: "https://github.com/ahmedmuntasirarhman/inductisense"
+license: MIT
+version: 0.1.0
+date-released: 2026-10-08
+abstract: "A reproducible electrical-engineering prototype for induction-motor health screening using current signature and vibration features."

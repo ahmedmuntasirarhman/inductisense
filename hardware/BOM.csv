@@ -1,0 +1,10 @@
+Reference,Part / example,Quantity,Function,Selection rationale,Status
+U1,ESP32-S3 DevKitC-1,1,Edge controller,"Fast MCU, Wi-Fi for local dashboard, broad tooling",Recommended
+U2,ADS131M02 evaluation board or isolated ADC stage,1,Current capture,"24-bit delta-sigma ADC; verify input range and reference circuit against datasheet",Prototype option
+CT1,SCT-013-030 split-core 30 A / 0.333 V current transformer,1,Non-invasive motor-current sensing,"Galvanic isolation; choose a CT range appropriate to the motor",Recommended
+U3,ICM-42688-P or ADXL345 breakout,1,Three-axis vibration sensor,"Digital IMU avoids analogue vibration pickup",Recommended
+U4,OPA320 or equivalent rail-to-rail op amp,1,Mid-rail buffer / anti-alias stage,"Low-noise, single-supply signal conditioning",Design option
+R1-R4,1% metal-film resistor set,1 set,Bias / filter network,"Set gain and corner frequency only after CT and ADC choices are final",Design option
+C1-C6,C0G/X7R capacitor set,1 set,Decoupling / anti-alias network,"Locate near active devices; confirm voltage rating",Design option
+PS1,Certified isolated USB-C or 12 V wall supply,1,Low-voltage power,"No direct mains-derived supply on prototype board",Required
+EN1,Insulated enclosure and strain relief,1,Mechanical/electrical protection,"Protects sensors and prevents accidental conductor contact",Required

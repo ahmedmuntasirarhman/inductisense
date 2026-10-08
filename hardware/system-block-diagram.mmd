@@ -1,0 +1,15 @@
+flowchart LR
+  subgraph Motor under observation
+    A[Single insulated phase conductor]
+    B[Motor housing]
+  end
+  A --> C[Split-core CT]
+  B --> D[Digital vibration IMU]
+  C --> E[Protected analogue front end]
+  E --> F[ADS131M02 / ADC]
+  D -->|SPI or I2C| G[ESP32-S3]
+  F -->|SPI| G
+  H[Certified isolated wall supply] --> G
+  G --> I[Serial logging / local dashboard]
+  classDef safety fill:#dcfce7,stroke:#15803d,color:#14532d;
+  class C,H safety;
