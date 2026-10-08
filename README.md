@@ -67,9 +67,8 @@ g++ -std=c++17 -Wall -Wextra -pedantic -Iinclude \
 
 ## Current status
 
-The simulation, signal-feature code, classifier demo, tests, and firmware decision core are in the repository. I haven’t built or measured a physical motor prototype. The ESP32 sketch is an early starting point: it reads the board’s analogue input, and its vibration values are examples rather than readings from a connected sensor.
+The simulation, signal-feature code, classifier demo, tests, and firmware decision core are in the repository. I haven’t built or measured a physical motor prototype. The ESP32 sketch is an early starting point: it reads the board’s analogue input, and its vibration values are simulations rather than readings from a connected sensor.
 
-For a physical build, use low-voltage test signals first and get qualified supervision before working near motor wiring. The [wiring notes](hardware/wiring.md) describe the concept and are not a substitute for a reviewed hardware design.
 
 ## License
 
